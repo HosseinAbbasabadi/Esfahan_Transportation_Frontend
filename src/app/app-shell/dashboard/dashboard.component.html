@@ -1,0 +1,31 @@
+<div class="content">
+  <div class="container-fluid">
+
+  </div>
+</div>
+
+<app-modal #sessionModal [modalConfig]="modalConfig">
+  <table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>تاریخ</th>
+        <th>وضعیت</th>
+        <th>IP Address</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let item of sessions; index as index">
+        <tr [ngClass]="item.isSuccessful ? 'bg-soft-success' : 'bg-soft-danger'">
+          <td>{{ index + 1 }}</td>
+          <td>{{ item.created }}</td>
+          <td>
+            <span *ngIf="item.isSuccessful">موفقیت آمیز</span>
+            <span *ngIf="!item.isSuccessful">ورود ناموفق</span>
+          </td>
+          <td>{{ item.clientIpAddress }}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</app-modal>

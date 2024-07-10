@@ -1,0 +1,62 @@
+<div class="mb-1 mt-1">
+  <label class="sr-only" [for]="identity">{{label}}</label>
+  <div class="input-group">
+    <div class="input-group-prepend" *ngIf="label">
+      <div class="input-group-text">{{label}}
+        <span class="text-danger" *ngIf="required"> *</span>
+      </div>
+    </div>
+
+    <ng-container [ngSwitch]="type">
+      <ng-container *ngSwitchCase="'simple'">
+        <select class="mr-2 custom-form-control" [id]="identity" (change)="itemSeleceted($event.target)"
+          [disabled]="isDisabled" [attr.required]="required || null">
+          <option value="">{{placeholder}}</option>
+          <option *ngFor="let item of options" [value]="item.guid" [selected]="item.guid == value">{{item.title}}
+          </option>
+        </select>
+      </ng-container>
+      <ng-container *ngSwitchCase="'select'">
+
+        <ng-select [items]="options" [id]="identity" [disabled]="isDisabled" placeholder="انتخاب کنید" bindLabel="title"
+          bindValue="guid" (change)="itemSeleceted($event)" [(ngModel)]="value" [searchable]="true"
+          [required]="required">
+        </ng-select>
+
+        <!-- <select appSelect2 data-toggle="select2" class="mr-2" [id]="identity" (itemSelected)="itemSeleceted()"
+          [disabled]="isDisabled" [attr.required]="required || null" [dropdownParent]="dropdownParent"
+          [selectedItem]="selectedItem">
+          <option></option>
+          <option *ngFor="let item of options" [value]="item.guid" [selected]="item.guid == value">{{item.title}}
+          </option>
+        </select> -->
+
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'select-ajax'">
+
+        <ng-select [items]="options" [id]="identity" [disabled]="isDisabled" placeholder="انتخاب کنید" bindLabel="title"
+          bindValue="guid" (change)="itemSeleceted($event)" [(ngModel)]="value" [searchable]="true"
+          [required]="required" [virtualScroll]="true">
+        </ng-select>
+
+        <!-- <select appSelect2 data-toggle="select2" class="mr-2" [id]="identity" (itemSelected)="itemSeleceted($event)"
+          [disabled]="isDisabled" [ajaxUrl]="ajaxUrl" [searchTerm]="searchTerm" [attr.required]="required || null"
+          [selectedItem]="selectedItem" [minimumInputLength]="minumumInputLength" [dropdownParent]="dropdownParent">
+          <option *ngFor="let item of options" [value]="item.guid">{{item.title}}</option>
+        </select> -->
+
+      </ng-container>
+
+    </ng-container>
+
+    <ng-content></ng-content>
+  </div>
+
+  <ul class="text-danger mt-1" *ngIf="ngControl?.invalid && (ngControl?.dirty)">
+    <li *ngIf="ngControl?.errors?.['required']">
+      این فیلد اجباری است.
+    </li>
+  </ul>
+
+</div>

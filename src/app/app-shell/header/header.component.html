@@ -1,0 +1,300 @@
+<div class="navbar-custom">
+  <div class="container-fluid">
+    <ul class="list-unstyled topnav-menu float-end mb-0">
+
+      <li>
+        <app-label-button identifier="submitBtn" label="مستندات" (click)="showModal()">
+        </app-label-button>
+      </li>
+      <li class="dropdown notification-list topbar-dropdown">
+        <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" href="javascript:void(0)"
+          role="button" aria-haspopup="false" aria-expanded="false">
+          <img width="25x" height="25px" src="assets/images/icons/bell-light.svg" />
+          <span *ngIf="notifications.length" class="badge bg-danger rounded-circle noti-icon-badge">{{
+            notifications.length }}</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end dropdown-lg">
+          <!-- item-->
+          <div class="dropdown-item noti-title">
+            <h5 class="m-0">
+              <span class="float-end">
+                <!-- <a href="" class="text-dark">
+                  <small>حذف همه</small>
+                </a> -->
+              </span>
+              <span *ngIf="notifications.length; else emptyNotification">پیغام ها</span>
+              <ng-template #emptyNotification>پیغامی برای شما وجود ندارد.</ng-template>
+            </h5>
+          </div>
+
+          <div class="noti-scroll" data-simplebar>
+            <ng-container *ngFor="let item of notifications">
+              <ng-container [ngSwitch]="item.type">
+                <ng-template ngSwitchCase="1">
+                  <a href="javascript:void(0)" (click)="openNotificationDestination(item)"
+                    class="dropdown-item notify-item active">
+                    <div class="notify-icon bg-soft-primary text-primary">
+                      <i class="mdi mdi-comment-account-outline"></i>
+                    </div>
+                    <p class="notify-details">
+                      درخواست شماره {{ item.requestCode }} تائید شد.
+                      <small class="text-muted">{{ item.creationDate }}</small>
+                    </p>
+                  </a>
+                </ng-template>
+                <ng-template ngSwitchCase="2">
+                  <a href="javascript:void(0)" (click)="openNotificationDestination(item)"
+                    class="dropdown-item notify-item active">
+                    <div class="notify-icon bg-soft-primary text-primary">
+                      <i class="mdi mdi-comment-account-outline"></i>
+                    </div>
+                    <p class="notify-details">درخواست شماره {{item.requestCode}} تائید شد.
+                      <small class="text-muted">{{item.creationDate}}</small>
+                    </p>
+                  </a>
+                </ng-template>
+                <ng-template ngSwitchCase="3">
+                  <a href="javascript:void(0)" (click)="openNotificationDestination(item)"
+                    class="dropdown-item notify-item active">
+                    <div class="notify-icon bg-soft-primary text-primary">
+                      <i class="mdi mdi-comment-account-outline"></i>
+                    </div>
+                    <p class="notify-details">درخواست شماره {{item.requestCode}} رد شد.
+                      <small class="text-muted">{{item.creationDate}}</small>
+                    </p>
+                  </a>
+                </ng-template>
+                <ng-template ngSwitchCase="4">
+                  <a href="javascript:void(0)" (click)="openNotificationDestination(item)"
+                    class="dropdown-item notify-item active">
+                    <div class="notify-icon bg-soft-primary text-primary">
+                      <i class="mdi mdi-comment-account-outline"></i>
+                    </div>
+                    <p class="notify-details">برای آزمایشگاه {{item.labName}}درخواست شماره {{item.requestCode}} تائید
+                      شد.
+                      <small class="text-muted">{{item.creationDate}}</small>
+                    </p>
+                  </a>
+                </ng-template>
+                <ng-template ngSwitchCase="5">
+                  <a href="javascript:void(0)" (click)="openNotificationDestination(item)"
+                    class="dropdown-item notify-item active">
+                    <div class="notify-icon bg-soft-primary text-primary">
+                      <i class="mdi mdi-comment-account-outline"></i>
+                    </div>
+                    <p class="notify-details">برای آزمایشگاه {{item.labName}}درخواست شماره {{item.requestCode}} رد شد.
+                      <small class="text-muted">{{item.creationDate}}</small>
+                    </p>
+                  </a>
+                </ng-template>
+                <ng-template ngSwitchCase="6">
+                  <a href="javascript:void(0)" (click)="openNotificationDestination(item)"
+                    class="dropdown-item notify-item active">
+                    <div class="notify-icon bg-soft-primary text-primary">
+                      <i class="mdi mdi-comment-account-outline"></i>
+                    </div>
+                    <p class="notify-details">
+                      درخواست شماره {{ item.requestCode }} به کارشناس ارسال شد.
+                      <small class="text-muted">{{ item.creationDate }}</small>
+                    </p>
+                  </a>
+                </ng-template>
+                <ng-template ngSwitchCase="7">
+                  <a href="javascript:void(0)" (click)="openNotificationDestination(item)"
+                    class="dropdown-item notify-item active">
+                    <div class="notify-icon bg-soft-primary text-primary">
+                      <i class="mdi mdi-comment-account-outline"></i>
+                    </div>
+                    <p class="notify-details">
+                      درخواست شماره {{ item.requestCode }} رد شد.
+                      <small class="text-muted">{{ item.creationDate }}</small>
+                    </p>
+                  </a>
+                </ng-template>
+                <ng-template ngSwitchCase="8">
+                  <a href="javascript:void(0)" (click)="openNotificationDestination(item)"
+                    class="dropdown-item notify-item active">
+                    <div class="notify-icon bg-soft-primary text-primary">
+                      <i class="mdi mdi-comment-account-outline"></i>
+                    </div>
+                    <p class="notify-details">درخواست شماره {{item.requestCode}} رد شد.
+                      <small class="text-muted">{{item.creationDate}}</small>
+                    </p>
+                  </a>
+                </ng-template>
+                <ng-template ngSwitchCase="9">
+                  <a href="javascript:void(0)" (click)="openNotificationDestination(item)"
+                    class="dropdown-item notify-item active">
+                    <div class="notify-icon bg-soft-primary text-primary">
+                      <i class="mdi mdi-comment-account-outline"></i>
+                    </div>
+                    <p class="notify-details">درخواست شماره {{item.requestCode}} نیاز به بازبینی دارد.
+                      <small class="text-muted">{{item.creationDate}}</small>
+                    </p>
+                  </a>
+                </ng-template>
+                <ng-template ngSwitchCase="10">
+                  <a href="javascript:void(0)" (click)="openNotificationDestination(item)"
+                    class="dropdown-item notify-item active">
+                    <div class="notify-icon bg-soft-primary text-primary">
+                      <i class="mdi mdi-comment-account-outline"></i>
+                    </div>
+                    <p class="notify-details">درخواست شماره {{item.requestCode}} بررسی شد.
+                      <small class="text-muted">{{item.creationDate}}</small>
+                    </p>
+                  </a>
+                </ng-template>
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+      </li>
+
+      <li class="dropdown notification-list topbar-dropdown">
+        <a class="nav-link dropdown-toggle waves-effect waves-light" routerLink="import-excel" role="button">
+          <img width="25x" height="25px" src="assets/images/icons/file-excel-regular.svg" />
+        </a>
+      </li>
+
+      <li class="dropdown notification-list topbar-dropdown">
+        <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#"
+          role="button" aria-haspopup="false" aria-expanded="false">
+          <img src="../assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle" />
+          <span class="pro-user-name ms-1">
+            {{ information.fullname }}
+            <img width="15px" height="15px" src="assets/images/icons/arrow-down-s-line.svg" />
+          </span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end profile-dropdown">
+
+          <!-- 
+          <a href="javascript:void(0);" (click)="openChangePasswordModal()" class="dropdown-item notify-item">
+            <img width="20px" height="20px" src="assets/images/icons/account-outline.svg" />
+            <span>تغییر کلمه رمز</span>
+          </a> 
+
+          <div class="dropdown-divider"></div>
+          -->
+
+          <a href="javascript:void(0);" routerLink="/user-management/setting" class="dropdown-item notify-item">
+            <img width="20px" height="20px" src="assets/images/icons/settings-outline.svg" />
+            <span>تنظیمات</span>
+          </a>
+
+          <!-- <div class="dropdown-divider"></div> -->
+
+          <a (click)="logout()" href="javascript:void(0)" class="dropdown-item notify-item">
+            <img width="20px" height="20px" src="assets/images/icons/logout-box-line.svg" />
+            <span>خروج از سیستم</span>
+          </a>
+        </div>
+      </li>
+
+      <li class="dropdown notification-list">
+        <a href="javascript:void(0);" class="nav-link right-bar-toggle waves-effect waves-light">
+          <img width="25x" height="25px" src="assets/images/icons/settings-outline.svg" />
+        </a>
+      </li>
+    </ul>
+
+    <!-- LOGO -->
+    <div class="logo-box">
+      <a href="index.html" class="logo logo-dark text-center">
+        <span class="logo-sm">
+          <img src="../assets/images/logo-solo.png" alt="" height="24" />
+          <!-- <span class="logo-lg-text-light">Minton</span> -->
+        </span>
+        <span class="logo-lg">
+          <img src="../assets/images/logo-solo.png" alt="" height="20" />
+          <!-- <span class="logo-lg-text-light">M</span> -->
+        </span>
+      </a>
+
+      <a href="index.html" class="logo logo-light text-center">
+        <span class="logo-sm">
+          <img src="../assets/images/logo-solo.png" alt="" height="24" />
+        </span>
+        <span class="logo-lg">
+          <img src="../assets/images/logo-solo.png" alt="" height="20" />
+        </span>
+      </a>
+    </div>
+
+    <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+      <li>
+        <button class="button-menu-mobile waves-effect waves-light">
+          <img width="25x" height="25px" src="assets/images/icons/list-bold.svg" />
+        </button>
+      </li>
+
+      <li>
+        <a class="navbar-toggle nav-link" data-bs-toggle="collapse" data-bs-target="#topnav-menu-content">
+          <div class="lines">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </a>
+      </li>
+
+      <ng-container *ngIf="information">
+        <li class="dropdown dropdown-mega d-none d-xl-block">
+          <a class="nav-link dropdown-toggle waves-effect waves-light" href="javascript:void(0)" role="button">
+            سازمان: {{ information.companyTitle }}
+          </a>
+        </li>
+
+        <li class="dropdown dropdown-mega d-none d-xl-block">
+          <a class="nav-link dropdown-toggle waves-effect waves-light" href="javascript:void(0)" role="button">
+            واحد سازمانی: {{ information.organizationChartTitle }}
+          </a>
+        </li>
+
+        <li class="dropdown dropdown-mega d-none d-xl-block">
+          <a class="nav-link dropdown-toggle waves-effect waves-light" href="javascript:void(0)" role="button">
+            سطح محرمانگی: {{ information.classificationLevel }}
+          </a>
+        </li>
+      </ng-container>
+    </ul>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<!-- <app-modal #changePasswordModal [modalConfig]="changePassModalConfig" (submited)="changePassword($event)">
+  <form [formGroup]="form" id="changePasswordForm" class="row">
+    <custom-input type="password" label="کلمه رمز فعلی" formControlName="currentPassword" identity="currentPassword"
+      size="col-12" class="mt-2" [required]="true">
+    </custom-input>
+
+    <hr />
+
+    <custom-input type="password" label="کلمه رمز" formControlName="password" identity="chPassword" size="col-12"
+      [required]="true">
+      <div class="w-100 position-absolute top-100" style="direction: ltr">
+        <password-strength-meter [password]="password" [minPasswordLength]="6" [numberOfProgressBarItems]="4"
+          (strengthChange)="strengthChange($event)"></password-strength-meter>
+      </div>
+    </custom-input>
+
+    <custom-input type="password" label="تکرار کلمه رمز" formControlName="rePassword" identity="chRePassword"
+      size="col-12" class="mt-2" [required]="true">
+    </custom-input>
+  </form>
+</app-modal> -->
+
+<app-modal #hintModal [modalConfig]="hintModalConfig">
+  <div class="mb-3 flex gap-3 justify_center">
+    <button class="hint_button pb-2" [ngStyle]="{'border-bottom': tabItem ==1 ? '4px solid #6559cc' : 'unset'}"
+      (click)="setTabItem(1)">فرایند ثبت درخواست کالیبراسیون</button>
+    <button class="hint_button pb-2" [ngStyle]="{'border-bottom': tabItem ==2 ? '4px solid #6559cc' : 'unset'}"
+      (click)="setTabItem(2)">فرایند بررسی و پذیرش درخواست کالیبراسیون</button>
+    <button class="hint_button pb-2" [ngStyle]="{'border-bottom': tabItem ==3 ? '4px solid #6559cc' : 'unset'}"
+      (click)="setTabItem(3)">فرایند ثبت درخواست آزمون- آزمایشگاه</button>
+  </div>
+  <div class="w-100">
+    <img *ngIf="tabItem == 1" src="../../../assets/images/hints/h1.png" alt="hint" class="w-100">
+    <img *ngIf="tabItem == 2" src="../../../assets/images/hints/h2.png" alt="hint" class="w-100">
+    <img *ngIf="tabItem == 3" src="../../../assets/images/hints/h3.png" alt="hint" class="w-100">
+  </div>
+</app-modal>

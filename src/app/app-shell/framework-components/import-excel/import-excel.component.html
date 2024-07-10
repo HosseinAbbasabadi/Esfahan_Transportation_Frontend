@@ -1,0 +1,125 @@
+<div class="card">
+    <div class="card-header bg-soft-primary">آپلود فایل اکسل</div>
+    <div class="card-body">
+        <div class="row">
+
+            <custom-input (change)="onFileUpload($event)" label="فایل اکسل" type="file" [(ngModel)]="excelFile"
+                identity="excelFile" size="col-4">
+            </custom-input>
+
+            <custom-select type="simple" identity="workSheetName" [(ngModel)]="workSheetName" [options]="workSheetNames"
+                label="انتخاب شیت" size="col-4" (selected)="onSheetSelected()" placeholder="لطفا انتخاب کنید">
+            </custom-select>
+
+            <custom-select (selected)="onTypeChanged()" identity="type" label="جدول مقصد" [(ngModel)]="selectedTypeId"
+                [options]="types" [isDisabled]="header.length == 0">
+            </custom-select>
+
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header bg-soft-success">اطلاعات موجود در فایل اکسل ({{body.length}})</div>
+    <div class="card-body">
+
+        <ag-grid-angular #agGrid id="myGrid" [components]="components" class="ag-theme-material"
+            style="height: 600px; width: auto;" [rowData]="gridData" [gridOptions]="gridOptions" [modules]="modules"
+            (gridReady)="onGridReady($event)"></ag-grid-angular>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header bg-soft-info">
+        <div class="row">
+            <div class="col-8">
+                نگاشت به جدول {{getTypeName()}}
+            </div>
+            <!-- <div class="col-4" *ngIf="getQueueLength() > 0">
+                <span>تکمیل {{getCompletedInQueue()}} از {{getQueueLength()}}</span>
+                <div class="progress mb-2">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success progress-xl"
+                        role="progressbar" [style]="getProgressWith()" [attr.aria-valuenow]="getQueueLength()"
+                        aria-valuemin="0" [attr.aria-valuemax]="getCompletedInQueue()">
+                    </div>
+                </div>
+            </div> -->
+        </div>
+
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="form-group col-4 row" *ngFor="let field of fieldList">
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">{{field.label}}
+                        </div>
+                    </div>
+
+                    <!-- 
+                    <ng-container *ngIf="field.referenceTable">
+                        <div (mouseenter)="loadReferenceData(field.referenceTable, field.name)">
+                            <select appSelect2 class="form-control" [name]="field.name" [(ngModel)]="field.value"
+                                id="field{{field.name}}" data-is-loaded="false">
+                            </select>
+                        </div>
+                    </ng-container> 
+                    -->
+
+                    <ng-container *ngIf="field.type == 'number'">
+                        <input type="number" class="form-control" [name]="field.name" [(ngModel)]="field.value">
+                    </ng-container>
+                    <ng-container *ngIf="!field.referenceTable && !field.type">
+                        <select appSelect2 class="form-control" [name]="field.name" [(ngModel)]="field.value">
+                            <option [value]="item.field" *ngFor="let item of gridOptions.columnDefs">{{item.headerName}}
+                            </option>
+                        </select>
+                    </ng-container>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card" *ngIf="fieldList.length > 0">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <button [disabled]="isSubmitting" type="button" class="btn btn-success waves-effect waves-light m-1"
+                    (click)="setQueue()">
+                    <span class="btn-label">
+                        <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm mr-1" role="status"
+                            aria-hidden="true"></span>
+                        <i *ngIf="!isSubmitting" class="fas fa-check"></i>
+                    </span>
+                    <span *ngIf="!isSubmitting">ثبت</span>
+                    <span *ngIf="isSubmitting">درحال پردازش</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-body" *ngIf="errorList.length">
+    <table id="datatable" datatable class="table dt-responsive nowrap w-100 table-bordered table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>ردیف</th>
+                <th>متن خطا</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let item of errorList[0]; let index = index" style="background-color: rgb(214, 202, 32);">
+                <td>{{index+1}}</td>
+                <td>
+                    سطر با مشخصات {{item.columnName}} دارای اطلاعات خالی یا تکراری می باشد.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

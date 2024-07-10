@@ -1,0 +1,58 @@
+<div class="left-side-menu">
+  <div class="h-100">
+    <div class="sidebar-content">
+      <div class="sidebar-icon-menu h-100" data-simplebar>
+        <a href="#" class="logo">
+          <span>
+            <img src="../assets/images/logo-sm.png" alt="" height="28" />
+          </span>
+        </a>
+        <nav class="nav flex-column" id="two-col-sidenav-main">
+          <a class="nav-link active" href="#dashboard" title="گزارشات">
+            <img width="25x" height="25px" src="assets/images/icons/ic24-dashboard.svg">
+          </a>
+          <a class="nav-link" href="#basic-info" title="اطلاعات پایه" *hasPermission="['BasicInformation']">
+            <img width="25x" height="25px" src="assets/images/icons/apps-2-line.svg">
+          </a>
+          <a class="nav-link" href="#finance" title="مالی" *hasPermission="['BasicInformation']">
+            <img width="25x" height="25px" src="assets/images/icons/apps-2-line.svg">
+          </a>
+        </nav>
+      </div>
+      <div class="sidebar-main-menu">
+        <div id="two-col-menu" class="h-100" data-simplebar>
+          <div class="twocolumn-menu-item d-block" id="dashboard">
+            <div class="title-box">
+              <ul class="nav flex-column">
+                <li class="nav-item">
+                  <a class="nav-link" [routerLink]="['/dashboard']" routerLinkActive="router-link-active">داشبورد</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="twocolumn-menu-item" id="basic-info">
+            <h5 class="menu-title">اطلاعات پایه</h5>
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/basic-info/vehicle-type"
+                  *hasPermission="['BasicInformation_PerformanceType']">نوع وسیله نقلیه</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="twocolumn-menu-item" id="finance">
+            <h5 class="menu-title">مالی و فروش</h5>
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/finance/invoice"
+                  *hasPermission="['BasicInformation_PerformanceType']">فاکتور فروش</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix">
+      </div>
+    </div>
+  </div>
+</div>

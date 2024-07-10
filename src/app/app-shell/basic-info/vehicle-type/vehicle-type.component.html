@@ -1,0 +1,104 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="button-list">
+                    <app-label-icon-button identifier="submitBtn" label="افزودن" icon="mdi-plus-thick"
+                        className="success" (clicked)="openOpsModal()"
+                        permission="BasicInformation_PerformanceType_New">
+                    </app-label-icon-button>
+                    <app-label-icon-button identifier="submitBtn" label="بازخوانی" icon="mdi-refresh"
+                        (clicked)="getList()">
+                    </app-label-icon-button>
+                    <app-label-button identifier="tableBtn" label="نمایش جدول" (clicked)="openTableModal()"
+                        className="danger">
+                    </app-label-button>
+                </div>
+            </div>
+            <div class="card-body" *ngIf="records.length">
+                <table id="datatable" datatable [dtOptions]="dtOptions"
+                    class="table dt-responsive nowrap w-100 table-bordered table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">عملیات</th>
+                            <th scope="col">نوع عملکرد</th>
+                            <th scope="col">وضعیت</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let item of records; let index = index">
+                            <td class="action-col">
+                                <app-fixed-columns [item]="item" [permissions]="buttonPermissions"
+                                    (delete)="delete($event)" (activate)="activate($event)"
+                                    (deactivate)="deactivate($event)"
+                                    (openOpsModal)="openOpsModal($event)"></app-fixed-columns>
+                            </td>
+                            <td>{{item.title}}</td>
+                            <td>
+                                <span *ngIf="item.isActive == 2" class="text-danger bg-soft-danger px-1">غیرفعال</span>
+                                <span *ngIf="item.isActive == 1" class="text-success bg-soft-success px-1">فعال</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="card-body" *ngIf="!records.length">
+                <table id="datatable" datatable [dtOptions]="dtOptions"
+                    class="table dt-responsive nowrap w-100 table-bordered table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">عملیات</th>
+                            <th scope="col">نوع عملکرد</th>
+                            <th scope="col">وضعیت</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-modal #opsModal [modalConfig]="modalConfig" (submited)="submit($event, true)" (onModalHide)="modalClosed()">
+    <form [formGroup]="form" id="submitForm" class="form-row" enctype="application/x-www-form-urlencoded">
+        <custom-input label="عنوان" formControlName="title" identity="title" size="col-12" [required]="true">
+        </custom-input>
+
+        <custom-input (changed)="setFile($event, 'attach')" type="file" label="فایل" formControlName="attach"
+            identity="attach" size="col-12"></custom-input>
+
+        <custom-select [options]="selectOptions" label="انتخاب" formControlName="selcet" identity="selcet"
+            size="col-12"></custom-select>
+
+        <!-- <custom-input (changed)="setFile($event, 'attach1')" type="file" label="فایل 1" formControlName="attach1"
+            identity="attach1" size="col-12"></custom-input>
+
+        <custom-input (changed)="setFile($event, 'attach2')" type="file" label="فایل 2" formControlName="attach2"
+            identity="attach2" size="col-12"></custom-input> -->
+    </form>
+</app-modal>
+
+<app-modal #tableModal [modalConfig]="tableModalConfig" (onModalHide)="clearTable()">
+    <div class="row">
+        <div class="col-7">
+            <app-js-tree #myTree (selected)="nodeSelected($event)"></app-js-tree>
+        </div>
+        <div class="col-5">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of table">
+                        <td>{{item.guid}}</td>
+                        <td>{{item.title}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</app-modal>
