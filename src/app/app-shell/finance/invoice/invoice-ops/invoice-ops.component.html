@@ -1,0 +1,103 @@
+<form [formGroup]="form">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+
+        <custom-input label="شماره" formControlName="no" identity="no" type="number" [required]="true">
+        </custom-input>
+
+        <custom-input label="تاریخ" formControlName="date" identity="date" type="date" [required]="true">
+        </custom-input>
+
+        <custom-select [options]="customers" label="مشتری" formControlName="customerId"
+          identity="customerId"></custom-select>
+
+        <custom-input label="توضیحات" formControlName="description" identity="description" type="text-area"
+          size="col-12">
+        </custom-input>
+
+      </div>
+
+    </div>
+  </div>
+</form>
+
+<div class="card">
+  <div class="card-header">
+    <button class="btn text-success" (click)="addDetail()">
+      <i class="fa fa-plus"></i>
+    </button>
+  </div>
+  <div class="card-body">
+
+    <table class="table table-bordered table-sm">
+      <thead>
+        <tr>
+          <th>عملیات</th>
+          <th>ردیف</th>
+          <th>محصول</th>
+          <th>تعداد</th>
+          <th>فی</th>
+          <th>مبلغ</th>
+          <th>تخفیف</th>
+          <th>مبلغ نهایی</th>
+          <th>توضیحات</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let detail of getActiveDetails(); let index = index">
+          <td class="text-center text-danger">
+            <i class="fa fa-trash cursor-pointer" (click)="removeDetail(detail.guid)"></i>
+          </td>
+          <td class="text-center">{{ index + 1 }}</td>
+          <td>
+            <select class="form-select w-auto" [(ngModel)]="detail.productId" id="productId-{{detail.guid}}">
+              <option [value]="item.guid" *ngFor="let item of products">{{item.title}}</option>
+            </select>
+          </td>
+          <td>
+            <input type="number" step="any" class="form-control form-control-sm" [(ngModel)]="detail.count"
+              (ngModelChange)="calculateFinalPrice(detail.guid)" id="count-{{detail.guid}}">
+          </td>
+          <td>
+            <input type="number" step="any" class="form-control form-control-sm" [(ngModel)]="detail.unitPrice"
+              (ngModelChange)="calculateFinalPrice(detail.guid)" id="unitPrice-{{detail.guid}}">
+          </td>
+          <td>
+            <input type="number" step="any" class="form-control form-control-sm" [(ngModel)]="detail.price"
+              (ngModelChange)="calculateFinalPrice(detail.guid)" id="price-{{detail.guid}}" readonly>
+          </td>
+          <td>
+            <input type="number" step="any" class="form-control form-control-sm" [(ngModel)]="detail.discount"
+              (ngModelChange)="calculateFinalPrice(detail.guid)" id="discount-{{detail.guid}}">
+          </td>
+          <td>
+            <input type="number" step="any" class="form-control form-control-sm" [(ngModel)]="detail.finalPrice"
+              (ngModelChange)="calculateFinalPrice(detail.guid)" id="finalPrice-{{detail.guid}}" readonly>
+          </td>
+          <td>
+            <input type="text" class="form-control form-control-sm" [(ngModel)]="detail.description"
+              id="description-{{detail.guid}}">
+          </td>
+        </tr>
+      </tbody>
+      <tfoot class="bg-soft-success">
+        <tr>
+          <td colspan="5">مجموع</td>
+          <td>{{ summary.sumPrice | number }}</td>
+          <td>{{ summary.sumDiscount | number }}</td>
+          <td>{{ summary.sumFinalPrice | number }}</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <app-label-button label="ذخیره" (clicked)="submit()"></app-label-button>
+    <app-label-button label="بازگشت به لیست" (clicked)="backToList()"></app-label-button>
+  </div>
+</div>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { InvoiceService } from './invoice.service';
 import { AgGridBaseComponent } from '../../framework-components/ag-grid-base/ag-grid-base.component';
 import { InvoiceModel } from './invoice';
+import { EditDeleteCellRenderer } from '../../framework-components/ag-grid/edit-delete-cell-btn';
 
 @Component({
   selector: 'app-invoice',
@@ -22,9 +23,12 @@ export class InvoiceComponent extends AgGridBaseComponent {
     this.gridOptions.columnDefs = [
       {
         field: '',
+        cellRenderer: EditDeleteCellRenderer,
+        cellRendererParams: {
+          editUrl: '/finance/invoice-ops'
+        },
         headerName: 'عملیات',
-        filter: 'agSetColumnFilter',
-        minWidth: 300,
+        filter: 'agSetColumnFilter'
       },
       {
         field: 'no',
@@ -74,6 +78,27 @@ export class InvoiceComponent extends AgGridBaseComponent {
   }
 
   navigateToCreate() {
+    this.route.navigateByUrl('finance/invoice-ops')
+  }
 
+  delete(guid) {
+    this.swalService
+      .fireSwal('آیا از انجام عملیات حذف اطمینان دارید؟', "حذف ردیف")
+      .then((t) => {
+        if (t.value === true) {
+          this.confirmDelete(guid)
+        } else {
+          this.swalService.dismissSwal(t)
+        }
+      })
+  }
+
+  confirmDelete(guid) {
+    this.invoiceService
+      .delete(guid)
+      .subscribe(data => {
+        this.notificationService.succeded()
+        this.getList()
+      })
   }
 }

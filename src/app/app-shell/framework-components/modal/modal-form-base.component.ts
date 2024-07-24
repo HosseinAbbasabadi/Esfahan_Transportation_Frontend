@@ -60,7 +60,6 @@ export class ModalFormBaseComponent<T extends ServiceBase, TModel> extends AgGri
 
   featureService = inject(FeatureService)
   router = inject(Router)
-  notificationService = inject(NotificationService)
   breadcrumbService = inject(BreadcrumbService)
   fb = inject(FormBuilder)
 

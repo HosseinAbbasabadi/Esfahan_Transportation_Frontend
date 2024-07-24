@@ -9,6 +9,7 @@ import { AgGridModule } from 'ag-grid-angular';
 import { FinanceComponent } from './finance.component';
 import { FinanceRoutingModule } from './finance-routing.module';
 import { InvoiceComponent } from './invoice/invoice.component';
+import { InvoiceOpsComponent } from './invoice/invoice-ops/invoice-ops.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { InvoiceComponent } from './invoice/invoice.component';
   ],
   declarations: [
     FinanceComponent,
-    InvoiceComponent
+    InvoiceComponent,
+    InvoiceOpsComponent
   ],
 })
 export class FinanceModule { }

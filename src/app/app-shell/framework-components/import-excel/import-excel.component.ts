@@ -246,9 +246,6 @@ export class ImportExcelComponent extends AgGridBaseComponent implements OnInit 
   queue = []
 
   constructor(
-    private readonly activatedRoute: ActivatedRoute,
-    private readonly notificationService: NotificationService,
-    private readonly formGeneratorService: FormGeneratorService,
     //private readonly listFieldItemService: ListFieldItemService,
     private readonly crumbService: BreadcrumbService) {
     super()

@@ -6,13 +6,13 @@ declare var $: any;
     selector: 'edit-delete-cell-renderer',
     template: `
     <span class="mr-1">
-        <a [routerLink]="[params.editUrl, id]"> 
-            <i class="la la-edit fs-4 me-1 cursor-pointer"></i>
+        <a [routerLink]="[params.editUrl, guid]" class="text-warning"> 
+            <i class="fa fa-edit mx-1 cursor-pointer"></i>
         </a>
     </span>
     <span class="mr-1">
-        <a (click)="btnDeleteClicked(2)"> 
-            <i class="la la-trash fs-4 me-1 cursor-pointer"></i>
+        <a (click)="btnDeleteClicked(2)" class="text-danger"> 
+            <i class="fa fa-trash mx-1"></i>
         </a>
     </span>`,
 })
@@ -21,7 +21,7 @@ export class EditDeleteCellRenderer implements ICellRendererAngularComp {
     canEdit: false;
     canDelete: false;
     canView: false;
-    id: 0;
+    guid;
 
     refresh(params: any): boolean {
         return true;
@@ -31,20 +31,12 @@ export class EditDeleteCellRenderer implements ICellRendererAngularComp {
         this.params = params;
 
         if (params.data) {
-            if (params.data.canEdit) {
-                this.canEdit = params.data.canEdit;
-            }
+            this.canEdit = params.data.canEdit;
+            this.canDelete = params.data.canDelete;
+            this.canView = params.data.canView;
 
-            if (params.data.canDelete) {
-                this.canDelete = params.data.canDelete;
-            }
-
-            if (params.data.canView) {
-                this.canView = params.data.canView;
-            }
-
-            if (params.data.id) {
-                this.id = params.data.id;
+            if (params.data.guid) {
+                this.guid = params.data.guid;
             }
         }
     }
@@ -52,6 +44,6 @@ export class EditDeleteCellRenderer implements ICellRendererAngularComp {
     btnDeleteClicked(arg) {
         this.params.context
             .componentParent
-            .delete(this.params.data.id);
+            .delete(this.params.data.guid);
     }
 }

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router'; // CLI imports router
 import { FinanceComponent } from './finance.component';
 import { InvoiceComponent } from './invoice/invoice.component';
+import { InvoiceOpsComponent } from './invoice/invoice-ops/invoice-ops.component';
 
 const routes: Routes = [
   {
@@ -9,6 +10,8 @@ const routes: Routes = [
     component: FinanceComponent,
     children: [
       { path: 'invoice', component: InvoiceComponent },
+      { path: 'invoice-ops', component: InvoiceOpsComponent },
+      { path: 'invoice-ops/:guid', component: InvoiceOpsComponent },
     ],
   },
 ];
